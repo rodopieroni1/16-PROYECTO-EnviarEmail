@@ -2,11 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const email = {
         email: '',
         asunto: '',
-        mensaje: ''
-
+        mensaje: '',
+        ccemail:''
     }
     //seleccionar los elementos de la interfaz
     const inputEmail = document.querySelector('#email');
+    const inputCCEmail = document.querySelector('#ccemail');
     const inputAsunto = document.querySelector('#asunto');
     const inputMensaje = document.querySelector('#mensaje');
     const formulario = document.querySelector('#formulario');
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     inputEmail.addEventListener('blur', validar);
     inputAsunto.addEventListener('blur', validar);
     inputMensaje.addEventListener('blur', validar);
-
+    inputCCEmail.addEventListener('blur', validar);
     formulario.addEventListener('submit', enviarMail);
 
     btnReset.addEventListener('click', function(e){
@@ -48,12 +49,13 @@ document.addEventListener('DOMContentLoaded', function () {
         
     }
 
-
     function validar(e) {
         if (e.target.value.trim() === '') {
-            mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
-            email[e.target.name] = '';
-            comprobarEmail();
+            if (e.target.id != 'ccemail' ){
+                mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
+                email[e.target.name] = '';
+                comprobarEmail();
+            }
             return;
         }
         if (e.target.id === 'email' && !validarEmail(e.target.value)) {
